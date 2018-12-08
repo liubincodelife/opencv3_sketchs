@@ -1,2 +1,2 @@
 # opencv3_sketchs
-opencv3 coding demos
+opencv3编程入门书籍例程
