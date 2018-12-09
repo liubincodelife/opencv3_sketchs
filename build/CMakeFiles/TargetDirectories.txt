@@ -1,0 +1,3 @@
+/home/liubin/workspace/opencv3_sketchs/build/CMakeFiles/rebuild_cache.dir
+/home/liubin/workspace/opencv3_sketchs/build/CMakeFiles/edit_cache.dir
+/home/liubin/workspace/opencv3_sketchs/build/CMakeFiles/OpenCV_Sketch.dir
