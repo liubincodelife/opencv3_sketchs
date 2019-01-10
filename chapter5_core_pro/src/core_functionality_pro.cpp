@@ -300,10 +300,10 @@ bool xml_yaml_read()
 
 bool xml_yaml_write()
 {
-	// FileStorage fs("../files/test.yaml", FileStorage::WRITE);  
+	FileStorage fs("../files/test.yaml", FileStorage::WRITE);  
 	// FileStorage fs("../files/test.xml", FileStorage::WRITE); 
 	// FileStorage fs("../files/test.txt", FileStorage::WRITE); 
-	FileStorage fs("../files/test.doc", FileStorage::WRITE);
+	// FileStorage fs("../files/test.doc", FileStorage::WRITE);
 
 	fs << "frameCount" << 5;  
 	time_t rawtime; time(&rawtime);  
