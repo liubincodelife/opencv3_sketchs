@@ -400,11 +400,116 @@ bool imageFloodFillWithMask()
 	return true;
 }
 
+bool gaussianPyrAndResize()
+{
+	Mat gaussianPyrSrcImage = imread("../images/car2.jpg");
+	if(gaussianPyrSrcImage.empty())
+	{
+		cout<<"gaussianPyrSrcImage is empty!!!"<<endl;
+		return false;
+	}
+	Mat gaussianPyrDstImage, gaussianPyrTmpImage;
+	namedWindow("GaussianPyr and Resize Window", WINDOW_AUTOSIZE);
+	imshow("GaussianPyr and Resize Src Window", gaussianPyrSrcImage);
+	gaussianPyrTmpImage = gaussianPyrSrcImage.clone();
+	while(1)
+	{
+		int c = waitKey(0);
+		if((c & 0xFF) == 27)
+		{
+			cout<<"process exit......"<<endl;
+			return false;
+		}
+		switch(char(c))
+		{
+			case 'q':
+				cout<<"key \"q\" pressed, switch to use mask or not."<<endl;
+				
+				break;
+			case 'u':
+				cout<<"key \"u\" pressed, pyr up to double size."<<endl;
+				pyrUp(gaussianPyrTmpImage, gaussianPyrDstImage, Size(gaussianPyrTmpImage.cols * 2, gaussianPyrTmpImage.rows * 2));
+				break;
+			case 'd':
+				cout<<"key \"d\" pressed, pyr down to double size."<<endl;
+				pyrDown(gaussianPyrTmpImage, gaussianPyrDstImage, Size(gaussianPyrTmpImage.cols / 2, gaussianPyrTmpImage.rows / 2));
+				break;
+			case 'r':
+				cout<<"key \"r\" pressed, resize up to double size with default mode."<<endl;
+				resize(gaussianPyrTmpImage, gaussianPyrDstImage, Size(gaussianPyrTmpImage.cols * 2, gaussianPyrTmpImage.rows * 2));
+				break;
+			case 's':
+				cout<<"key \"s\" pressed, resize down to double size with default mode."<<endl;
+				resize(gaussianPyrTmpImage, gaussianPyrDstImage, Size(gaussianPyrTmpImage.cols / 2, gaussianPyrTmpImage.rows / 2));
+				break;
+			case 'e':
+				cout<<"key \"e\" pressed, resize up to double size with INTER_CUBIC mode."<<endl;
+				resize(gaussianPyrTmpImage, gaussianPyrDstImage, Size(gaussianPyrTmpImage.cols * 2, gaussianPyrTmpImage.rows * 2), 
+					0.0, 0.0, INTER_CUBIC);
+				break;
+			case 'a':
+				cout<<"key \"a\" pressed, resize down to double size with INTER_CUBIC mode."<<endl;
+				resize(gaussianPyrTmpImage, gaussianPyrDstImage, Size(gaussianPyrTmpImage.cols / 2, gaussianPyrTmpImage.rows / 2),
+				0.0, 0.0, INTER_CUBIC);
+				break;
+			default:
+				break;
+		}
+		imshow("GaussianPyr and Resize Drc Window", gaussianPyrDstImage);
+		gaussianPyrTmpImage = gaussianPyrDstImage;
+	}
+	return true;
+}
+
+Mat g_thresholdSrcImage, g_thresholdDstImage, g_thresholdGrayImage;
+int g_nThresholdType = THRESH_TOZERO;
+int g_nThresholdValue = 100;
+
+
+void threshold_cb(int, void *)
+{
+	if(g_nThresholdType != 5)
+	{
+		threshold(g_thresholdGrayImage, g_thresholdDstImage, g_nThresholdValue, 255, g_nThresholdType);
+	}
+	else
+	{
+		adaptiveThreshold(g_thresholdGrayImage, g_thresholdDstImage, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 5, 0);
+	}
+	
+	imshow("Threshold Process Dst Window", g_thresholdDstImage);
+}
+
+bool thresholdOperation()
+{
+	g_thresholdSrcImage = imread("../images/sea.jpg");
+	if(g_thresholdSrcImage.empty())
+	{
+		cout<<"g_thresholdSrcImage is empty!!!"<<endl;
+		return false;
+	}
+	cvtColor(g_thresholdSrcImage, g_thresholdGrayImage, COLOR_BGR2GRAY);
+	namedWindow("Threshold Process Dst Window", WINDOW_AUTOSIZE);
+	imshow("Threshold Process Sst Window", g_thresholdSrcImage);
+	createTrackbar("mode", "Threshold Process Dst Window", &g_nThresholdType, 5, threshold_cb);
+	createTrackbar("value", "Threshold Process Dst Window", &g_nThresholdValue, 255, threshold_cb);
+	threshold_cb(0, 0);
+	while(1)
+	{
+		int c = waitKey(0);
+		if(c == 27)
+			break;
+	}
+	return true;
+}
+
 
 void imgproc_functionality_imageprocess::process()
 {
 	// imageFilterProcess();
 	// imageMorphologyProcess();
 	// imageFloodFillNoMask();
-	imageFloodFillWithMask();
+	// imageFloodFillWithMask();
+	// gaussianPyrAndResize();
+	thresholdOperation();
 }
