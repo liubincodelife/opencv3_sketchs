@@ -1,0 +1,3 @@
+/home/liubin/workspace/opencv3_sketchs/chapter7_imgproc_imgtransform/build/CMakeFiles/rebuild_cache.dir
+/home/liubin/workspace/opencv3_sketchs/chapter7_imgproc_imgtransform/build/CMakeFiles/edit_cache.dir
+/home/liubin/workspace/opencv3_sketchs/chapter7_imgproc_imgtransform/build/CMakeFiles/OpenCV_Sketch.dir

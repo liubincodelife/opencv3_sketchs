@@ -490,7 +490,7 @@ bool thresholdOperation()
 	}
 	cvtColor(g_thresholdSrcImage, g_thresholdGrayImage, COLOR_BGR2GRAY);
 	namedWindow("Threshold Process Dst Window", WINDOW_AUTOSIZE);
-	imshow("Threshold Process Sst Window", g_thresholdSrcImage);
+	imshow("Threshold Process Src Window", g_thresholdSrcImage);
 	createTrackbar("mode", "Threshold Process Dst Window", &g_nThresholdType, 5, threshold_cb);
 	createTrackbar("value", "Threshold Process Dst Window", &g_nThresholdValue, 255, threshold_cb);
 	threshold_cb(0, 0);
